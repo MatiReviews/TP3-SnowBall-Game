@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int P1Life;
     public int P2Life;
 
+    public TextMeshProUGUI mainMenu;
+
     // Update is called once per frame
     void Update()
     {
@@ -28,6 +32,18 @@ public class GameManager : MonoBehaviour
             Player2.SetActive(false);
             P1Wins.SetActive(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.R)){
+            SceneManager.LoadScene(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            SceneManager.LoadScene(0);
+        }
+
+        if (P1Wins.activeSelf || P2Wins.activeSelf){
+            mainMenu.gameObject.SetActive(true);
+        }
     }
 
 
@@ -39,7 +55,7 @@ public class GameManager : MonoBehaviour
             else
                 p1Sticks[i].SetActive(false);        
         }
-
+       
         hurtSound.Play();
         deathSFX();
     }

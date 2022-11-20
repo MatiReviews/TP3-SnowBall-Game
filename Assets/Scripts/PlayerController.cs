@@ -24,6 +24,14 @@ public class PlayerController : MonoBehaviour
     public GameObject snowBall;
     public Transform throwPoint;
     public AudioSource throwSound;
+    [SerializeField] States currentState = States.idle;
+
+    public enum States{
+        idle,
+        moving,
+        jumping,
+        isAttacking        
+    }
 
     // Start is called before the first frame update
     void Start(){
@@ -47,24 +55,19 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(left)){
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+            SetCurrentState(States.moving);
         }
         else if(Input.GetKey(right)){
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+            SetCurrentState(States.moving);
         }
         else{
             rb.velocity = new Vector2(0, rb.velocity.y);
+            SetCurrentState(States.idle);
         }
 
-        if (Input.GetKeyDown(jump) && isGrounded){
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
-
-        if(rb.velocity.x < 0){
-            transform.localScale = new Vector3(-1,1,1);
-        }
-        else if (rb.velocity.x > 0){
-            transform.localScale = new Vector3(1, 1, 1);
-        }
+        jumping();
+        checkRotation();      
     }
 
     void attack(){
@@ -72,8 +75,30 @@ public class PlayerController : MonoBehaviour
             GameObject ballClone = (GameObject)Instantiate(snowBall, throwPoint.position, throwPoint.rotation);
             ballClone.transform.localScale = transform.localScale;
             anim.SetTrigger("Throw");
-
             throwSound.Play();
         }
+
+        if (Input.GetKey(throwBall))
+            SetCurrentState(States.isAttacking);        
+    }
+
+    void jumping(){
+        if (Input.GetKeyDown(jump) && isGrounded){
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+
+        if (Input.GetKey(jump))
+            SetCurrentState(States.jumping);
+    }
+
+    void checkRotation(){
+        if (rb.velocity.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+        else if (rb.velocity.x > 0)
+            transform.localScale = new Vector3(1, 1, 1);        
+    }
+
+    public void SetCurrentState(States state){
+        currentState = state;
     }
 }
