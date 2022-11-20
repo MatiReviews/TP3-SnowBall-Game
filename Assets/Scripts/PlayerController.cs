@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public enum States{
         idle,
-        moving,
+        movingLeft,
+        movingRight,
         jumping,
         isAttacking        
     }
@@ -55,15 +56,24 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(left)){
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            SetCurrentState(States.moving);
+
+            if(currentState != States.movingLeft && !Input.GetKey(jump)){
+                SetCurrentState(States.movingLeft);
+            }
         }
         else if(Input.GetKey(right)){
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-            SetCurrentState(States.moving);
+
+            if (currentState != States.movingRight && !Input.GetKey(jump)){
+                SetCurrentState(States.movingRight);
+            }
         }
-        else{
+        else if(!Input.GetKey(jump)){
             rb.velocity = new Vector2(0, rb.velocity.y);
-            SetCurrentState(States.idle);
+
+            if (currentState != States.idle){
+                SetCurrentState(States.idle);                
+            }
         }
 
         jumping();
@@ -78,7 +88,7 @@ public class PlayerController : MonoBehaviour
             throwSound.Play();
         }
 
-        if (Input.GetKey(throwBall))
+        if (Input.GetKeyDown(throwBall) && currentState != States.isAttacking)
             SetCurrentState(States.isAttacking);        
     }
 
@@ -87,8 +97,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
-        if (Input.GetKey(jump))
+        if (Input.GetKey(jump) && currentState != States.jumping){
             SetCurrentState(States.jumping);
+        }
     }
 
     void checkRotation(){
@@ -99,6 +110,28 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SetCurrentState(States state){
-        currentState = state;
+        if(currentState != state){
+            currentState = state;           
+        }
+
+        switch (currentState){
+            case States.idle:
+                Debug.Log("New State:" + States.idle);
+                break;
+            case States.movingLeft:
+                Debug.Log("New State: Left " + States.movingLeft);
+                break;
+            case States.movingRight:
+                Debug.Log("New State: Left " + States.movingRight);
+                break;
+            case States.jumping:
+                Debug.Log("New State:" + States.jumping);
+                break;
+            case States.isAttacking:
+                Debug.Log("New State:" + States.isAttacking);
+                break;
+            default:
+                break;
+        }
     }
 }

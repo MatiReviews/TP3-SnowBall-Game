@@ -55,7 +55,8 @@ public class GameManager : MonoBehaviour
             else
                 p1Sticks[i].SetActive(false);        
         }
-       
+        
+        
         hurtSound.Play();
         deathSFX();
     }

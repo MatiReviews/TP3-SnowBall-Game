@@ -510,10 +510,10 @@ TextureImporter:
       name: SnowBallFightArt_18
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 16
-        height: 16
+        x: 1
+        y: 65
+        width: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1042,7 +1042,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SnowBallFightArt_10: -1017220232
+      SnowBallFightArt_11: -406300492
       SnowBallFightArt_14: 2013730754
       SnowBallFightArt_16: -861117747
       SnowBallFightArt_29: 2124171471
@@ -1084,7 +1084,7 @@ TextureImporter:
       SnowBallFightArt_0: 140530144
       SnowBallFightArt_38: 648900026
       SnowBallFightArt_39: 1170524147
-      SnowBallFightArt_11: -406300492
+      SnowBallFightArt_10: -1017220232
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
