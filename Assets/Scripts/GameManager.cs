@@ -6,30 +6,27 @@ public class GameManager : MonoBehaviour
 {
     public GameObject Player1;
     public GameObject Player2;
-    public GameObject GameOver;
+    public GameObject P1Wins;
+    public GameObject P2Wins;
     public GameObject[] p1Sticks;
     public GameObject[] p2Sticks;
+    public AudioSource hurtSound;
+    public AudioSource deathSound;
 
     public int P1Life;
     public int P2Life;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if(P1Life <= 0){
+        if(P1Life <= 0){           
             Player1.SetActive(false);
-            GameOver.SetActive(true);
+            P2Wins.SetActive(true);
         }
 
-        if (P2Life <= 0){
+        if (P2Life <= 0){            
             Player2.SetActive(false);
-            GameOver.SetActive(true);
+            P1Wins.SetActive(true);
         }
     }
 
@@ -42,6 +39,9 @@ public class GameManager : MonoBehaviour
             else
                 p1Sticks[i].SetActive(false);        
         }
+
+        hurtSound.Play();
+        deathSFX();
     }
 
     public void HurtP2(){
@@ -52,6 +52,16 @@ public class GameManager : MonoBehaviour
             else
                 p2Sticks[i].SetActive(false);
         }
+
+        hurtSound.Play();
+        deathSFX();
     }
 
+    void deathSFX(){
+        if (P1Life <= 0)
+            deathSound.Play();
+
+        if (P2Life <= 0)
+            deathSound.Play();
+    }
 }
